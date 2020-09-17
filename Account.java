@@ -22,8 +22,8 @@ public class Account {
 	}
 
 	public static void printAccounts() {
+		System.out.println("|||||Displaying User Account Information|||||");
 		for (Account accnt : accountList) {
-			System.out.println("|||||Displaying User Account Information|||||");
 			System.out.println(accnt.getName());
 			System.out.println(accnt.getPassword());
 		}
@@ -34,24 +34,7 @@ public class Account {
 		System.out.println("Login with password: " + password);
 	}
 
-	public static void main(String[] args) {
-
-		Scanner userInput = new Scanner(System.in);
-		int menuOption;
-
-		try {
-			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("Accounts.txt"));
-			for (Account accnt : accountList) {
-				if (accnt != null) {
-					outputStream.writeObject(accnt);
-				}
-			}
-			outputStream.close();
-		} catch (IOException e) {
-			System.out.println("Error in file writing");
-			e.printStackTrace();
-		}
-
+	public static void loadAccounts() {
 		try {
 			ObjectInputStream fileInput = new ObjectInputStream(new FileInputStream("Accounts.txt"));
 			while (true) {	
@@ -74,45 +57,65 @@ public class Account {
 			System.out.println("Error in file writing");
 			e.printStackTrace();
 		}
+	}
+
+	public static void saveAccounts() {
+		try {
+			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("Accounts.txt"));
+			for (Account accnt : accountList) {
+				if (accnt != null) {
+					outputStream.writeObject(accnt);
+				}
+			}
+			outputStream.close();
+		} catch (IOException e) {
+			System.out.println("Error in file writing");
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+
+		loadAccounts();
+
+		Scanner userInput = new Scanner(System.in);
+		int menuOption;
 
 		do {
 			System.out.println("Enter: 0 = exit, 1 = new account, 2 = login");
 			menuOption = userInput.nextInt();
 			String bufferLine = userInput.nextLine();
 
-			if (menuOption == 0) {
+			String userNameInput;
+			String userPasswordInput;
 
-				System.out.println("Exiting...");
-				System.exit(0);
+			switch (menuOption) {
+				case 0:
+					System.out.println("Exiting...");
+					System.exit(0);
+					break;
+				case 1:
+					System.out.println("New account creation starting...");
 
-			} else if (menuOption == 1) {
+					System.out.println("Enter your username: ");
+					userNameInput = userInput.nextLine();
+					System.out.println("Enter your password: ");
+					userPasswordInput = userInput.nextLine();
 
-				System.out.println("New account creation starting...");
+					Account testAccount = new Account(userNameInput,userPasswordInput);
+					printAccounts();
+					break;
+				case 2:
+					System.out.println("Login for system...");
+					System.out.println("Enter your username: ");
+					userNameInput = userInput.nextLine();
+					System.out.println("Enter your password: ");
+					userPasswordInput = userInput.nextLine();
 
-				System.out.println("Enter your username: ");
-				String userNameInput = userInput.nextLine();
-				System.out.println("Enter your password: ");
-				String userPasswordInput = userInput.nextLine();
-
-				Account testAccount = new Account(userNameInput,userPasswordInput);
-				printAccounts();
-
-			} else {
-
-				System.out.println("Login for system...");
-				System.out.println("Enter your username: ");
-				String userNameInput = userInput.nextLine();
-				System.out.println("Enter your password: ");
-				String userPasswordInput = userInput.nextLine();
-
-				loginAccount(userNameInput, userPasswordInput);
-				printAccounts();
+					loginAccount(userNameInput, userPasswordInput);
+					printAccounts();
+					break;
 			}
-		} while (menuOption != 0);
-
-		
-
-
+		} while (true);
 	}
-
 }
