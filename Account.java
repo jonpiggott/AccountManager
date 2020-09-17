@@ -115,6 +115,9 @@ public class Account {
 					loginAccount(userNameInput, userPasswordInput);
 					printAccounts();
 					break;
+				default:
+					System.out.println("Invalid Entry");
+					break;
 			}
 		} while (true);
 	}
