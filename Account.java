@@ -32,6 +32,16 @@ public class Account {
 	public static void loginAccount(String username, String password) {
 		System.out.println("Login with username: " + username);
 		System.out.println("Login with password: " + password);
+		boolean foundAccount = false;
+		for (Account accnt : accountList) {
+			if (username.equals(accnt.getName()) && password.equals(accnt.getPassword())) {
+				System.out.println("||||Login SUCCESSFUL||||");
+				foundAccount = true;
+			}
+		}
+		if (!foundAccount) {
+				System.out.println("||||Login FAILED||||");
+		}
 	}
 
 	public static void loadAccounts() {
@@ -113,7 +123,6 @@ public class Account {
 					userPasswordInput = userInput.nextLine();
 
 					loginAccount(userNameInput, userPasswordInput);
-					printAccounts();
 					break;
 				default:
 					System.out.println("Invalid Entry");
