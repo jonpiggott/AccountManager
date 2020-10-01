@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Account {
+public class Account implements Serializable {
 
 	private String userName;
 	private String password;
@@ -58,14 +58,17 @@ public class Account {
 			}		
 			fileInput.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("Error in file writing");
+			System.out.println("Error in file reading 1, file not found");
 			e.printStackTrace();
+			System.exit(0);
 		} catch (ClassNotFoundException e) {
-			System.out.println("Error in file writing");
+			System.out.println("Error in file reading 2, class not found");
 			e.printStackTrace();
+			System.exit(0);
 		} catch (IOException e) {
-			System.out.println("Error in file writing");
+			System.out.println("Error in file reading 3, error with file input");
 			e.printStackTrace();
+			System.exit(0);
 		}
 	}
 
@@ -102,6 +105,7 @@ public class Account {
 			switch (menuOption) {
 				case 0:
 					System.out.println("Exiting...");
+					saveAccounts();
 					System.exit(0);
 					break;
 				case 1:
