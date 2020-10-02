@@ -4,12 +4,12 @@ import java.util.*;
 public class Account implements Serializable {
 
 	private String userName;
-	private String password;
+	private int password;
 	public static ArrayList<Account> accountList = new ArrayList<Account>();
 
 	public Account(String uName, String pWord) {
 		this.userName = uName;
-		this.password = pWord;
+		this.password = pWord.hashCode();
 		accountList.add(this);
 	}
 
@@ -17,7 +17,7 @@ public class Account implements Serializable {
 		return this.userName;
 	}
 
-	public String getPassword() {
+	public int getPassword() {
 		return this.password;
 	}
 
@@ -34,7 +34,7 @@ public class Account implements Serializable {
 		System.out.println("Login with password: " + password);
 		boolean foundAccount = false;
 		for (Account accnt : accountList) {
-			if (username.equals(accnt.getName()) && password.equals(accnt.getPassword())) {
+			if (username.equals(accnt.getName()) && password.hashCode() == accnt.getPassword()) {
 				System.out.println("||||Login SUCCESSFUL||||");
 				foundAccount = true;
 			}
