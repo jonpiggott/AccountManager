@@ -117,7 +117,7 @@ public class Account implements Serializable {
 					userPasswordInput = userInput.nextLine();
 
 					Account testAccount = new Account(userNameInput,userPasswordInput);
-					printAccounts();
+					//printAccounts();
 					break;
 				case 2:
 					System.out.println("Login for system...");
