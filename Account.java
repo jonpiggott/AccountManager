@@ -3,24 +3,29 @@ import java.util.*;
 
 public class Account implements Serializable {
 
+	//initialize variables and ArrayList to store information
 	private String userName;
 	private int password;
 	public static ArrayList<Account> accountList = new ArrayList<Account>();
 
+	//constructor for new accounts
 	public Account(String uName, String pWord) {
 		this.userName = uName;
 		this.password = pWord.hashCode();
 		accountList.add(this);
 	}
 
+	//getter for usernames
 	public String getName() {
 		return this.userName;
 	}
 
+	//getter for passwords
 	public int getPassword() {
 		return this.password;
 	}
 
+	//print function for debugging purposes
 	public static void printAccounts() {
 		System.out.println("|||||Displaying User Account Information|||||");
 		for (Account accnt : accountList) {
@@ -29,6 +34,7 @@ public class Account implements Serializable {
 		}
 	}
 
+	//method to check for correct login information
 	public static void loginAccount(String username, String password) {
 		System.out.println("Login with username: " + username);
 		System.out.println("Login with password: " + password);
@@ -44,6 +50,7 @@ public class Account implements Serializable {
 		}
 	}
 
+	//method to load accounts from Accounts.txt to the ArrayList
 	public static void loadAccounts() {
 		try {
 			ObjectInputStream fileInput = new ObjectInputStream(new FileInputStream("Accounts.txt"));
@@ -72,6 +79,7 @@ public class Account implements Serializable {
 		}
 	}
 
+	//method to save Account info to Accounts.txt from the ArrayList
 	public static void saveAccounts() {
 		try {
 			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("Accounts.txt"));
